@@ -16,3 +16,6 @@ TEMPLATE = app
 SOURCES += main.cpp demowindow.cpp fancytabbar.cpp fancytab.cpp stylehelper.cpp
 
 HEADERS  += demowindow.h fancytabbar.h stylehelper.h fancytab.h
+
+RESOURCES += \
+    resources.qrc
