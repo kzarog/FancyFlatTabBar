@@ -48,6 +48,7 @@ public:
     enum struct TabBarPosition { Above, Below, Left, Right };
 
     FancyTabBar(const TabBarPosition position, QWidget *parent = 0);
+    FancyTabBar(QWidget *parent = 0);
     ~FancyTabBar();
 
 

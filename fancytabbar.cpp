@@ -28,7 +28,7 @@
 ****************************************************************************/
 
 #include "fancytabbar.h"
-#include <stylehelper.h>
+#include "stylehelper.h"
 
 #include <QMouseEvent>
 #include <QPainter>
@@ -58,6 +58,28 @@ FancyTabBar::FancyTabBar(const TabBarPosition position, QWidget *parent)
         setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     }
 
+    setAttribute(Qt::WA_Hover, true);
+    setFocusPolicy(Qt::NoFocus);
+    setMouseTracking(true); // Needed for hover events
+    mTimerTriggerChangedSignal.setSingleShot(true);
+
+    // We use a zerotimer to keep the sidebar responsive
+    connect(&mTimerTriggerChangedSignal, SIGNAL(timeout()), this, SLOT(emitCurrentIndex()));
+}
+
+FancyTabBar::FancyTabBar(QWidget *parent)
+    : QWidget(parent)
+{
+    mPosition = TabBarPosition::Left;
+
+    mHoverIndex = -1;
+    mCurrentIndex = -1;
+
+    // Assume left position
+    setMinimumWidth(qMax(2 * m_rounding, 40));
+    setMaximumWidth(tabSizeHint(false).width());
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    
     setAttribute(Qt::WA_Hover, true);
     setFocusPolicy(Qt::NoFocus);
     setMouseTracking(true); // Needed for hover events
